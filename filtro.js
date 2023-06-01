@@ -1,4 +1,6 @@
-// Tenemos un li de productos
+/* Tenemos un li de productos en el hatml que por medio de la función displayProductos se colocan los productos en pantalla
+  y con la funcion filtrado que se llama mediante el boton se filtran dichos productos con el texto colocado en el input.
+*/
 
 const productos = [
   {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
@@ -8,24 +10,27 @@ const productos = [
   {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
 ]
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
+const li = document.getElementById("lista-de-productos") /* Se obtiene el elemento por id no por nombre */
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
+const inputHtml = document.querySelector(".input1");/* Cambiar el nombre de la variable a uno más especifico y colocar la clase correspodiente  */
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
+const displayProductos = (productos) => { /* Se creo la función desplayProductos para imprimir en el DOM los productos. */
+  for (let i = 0; i < productos.length; i++) {
+    let d = document.createElement("div")
+    d.classList.add("producto")
+
+    let ti = document.createElement("p")
+    ti.classList.add("titulo")
+    ti.textContent = productos[i].nombre
   
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+    let imagen = document.createElement("img");
+    imagen.setAttribute("src", productos[i].img);
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    d.appendChild(ti)
+    d.appendChild(imagen)
 
-  li.appendChild(d)
+    li.appendChild(d)
+  }
 }
 
 displayProductos(productos)
@@ -36,7 +41,7 @@ botonDeFiltro.onclick = function() {
     li.removeChild(li.firstChild);
   }
 
-  const texto = $i.value;
+  const texto = inputHtml.value;
   console.log(texto);
   const productosFiltrados = filtrado(productos, texto );
 
@@ -49,7 +54,7 @@ botonDeFiltro.onclick = function() {
     ti.textContent = productosFiltrados[i].nombre
     
     var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
+    imagen.setAttribute("src", productosFiltrados[i].img);
   
     d.appendChild(ti)
     d.appendChild(imagen)
@@ -58,6 +63,6 @@ botonDeFiltro.onclick = function() {
   }
 }
 
-const filtrado = (productos = [], texto) => {
+const filtrado = (productos, texto) => {
   return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
 }  
